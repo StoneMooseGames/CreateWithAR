@@ -6,12 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/ARScene.unity
-    guid: 86344efdba51b864197fc6b8e4d3f794
+    path: Assets/Scenes/ARPlaneDetection.unity
+    guid: efdd4bec02e2f3048853444aa76b82bc
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 0465d33c6aee55f44b0237db8b0e0259,
       type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 3fd4fc0127790db4bae83f7b77da8d45,
+      type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 259f9d6df94670b48b4ffd63f182f623,
+      type: 2}
+    xr.sdk.mock-hmd.settings: {fileID: 11400000, guid: 4bb201d2255a2b14185f81411e7e130a,
       type: 2}
