@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 public class WayPointController : MonoBehaviour
 {
@@ -9,20 +11,25 @@ public class WayPointController : MonoBehaviour
     public GameObject waypoint;
     GameObject petChosen;
     Route chosenRoute;
-    public bool petSelected;
-    public bool routeSelected;
+    public bool petSelected = false;
+    public bool routeSelected = false;
     public bool isActive;
     int currentRouteIndex;
     float speed;
     bool isRouteDone = false;
     Vector3 currentPoint;
     Vector3 nextPoint;
-
+    ARPlane arplane;
+    private void Awake()
+    {
+        arplane = GameObject.Find("AR Session Origin").GetComponent<ARPlane>();   
+    }
     void Start()
     {
         speed = 2;
         currentRouteIndex = 0;
-        
+        petSelected = false;
+        routeSelected = false;
         ChoosePet(0);
         ChooseRoute(0);
     }
@@ -37,7 +44,9 @@ public class WayPointController : MonoBehaviour
             currentPoint = chosenRoute.routePoints[currentRouteIndex];
             nextPoint = chosenRoute.routePoints[currentRouteIndex + 1];
             MovePet();
+            CheckRange();
         }
+        else isActive = false;
     }
 
     public void ChoosePet(int petIndex)
@@ -59,8 +68,8 @@ public class WayPointController : MonoBehaviour
         for(int i=1;i< chosenRoute.routePoints.Count; i++)
         {
             Instantiate(waypoint, chosenRoute.routePoints[i], new Quaternion(0, 0, 0, 0));
-        }          
-        
+        }
+       
         isRouteDone = true;
     }
 
@@ -75,9 +84,9 @@ public class WayPointController : MonoBehaviour
     public void SetNextWaypoint()
     {
         
-        Debug.Log(currentRouteIndex);
+        /*Debug.Log(currentRouteIndex);
         Debug.Log(nextPoint);
-        Debug.Log(chosenRoute.routePoints.Count);
+        Debug.Log(chosenRoute.routePoints.Count);*/
         currentRouteIndex++;
         if(currentRouteIndex == chosenRoute.routePoints.Count - 1)
         {
@@ -101,5 +110,27 @@ public class WayPointController : MonoBehaviour
     public void ToggleRouteSelected()
     {
         routeSelected = !routeSelected;
+    }
+
+    void CheckRange()
+    {
+        
+            RaycastHit checkForPlayer;
+            // create the ray to use
+            Ray ray = new Ray(transform.position, GameObject.FindGameObjectWithTag("playerCharacter").transform.position - transform.position);
+            //casting a ray against the player
+            if (Physics.Raycast(ray, out checkForPlayer))
+            {
+                //we are here if the ray hit a collider
+                //now to check if that collider is the player
+                if (checkForPlayer.collider.gameObject.GetComponent<ARSessionOrigin>())
+                {
+                Debug.Log(checkForPlayer.distance);
+                Debug.DrawLine(this.transform.position,checkForPlayer.transform.position,Color.red);
+                
+                }
+            }
+            
+        
     }
 }

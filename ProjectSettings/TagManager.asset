@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - modelObject
+  - Ignite
+  - playerCharacter
   layers:
   - Default
   - TransparentFX
