@@ -6,13 +6,14 @@ using UnityEngine.XR.ARSubsystems;
 
 public class WayPointController : MonoBehaviour
 {
+    private GameObject spawnNew;
     public List<Route> routeList;
-    public List<GameObject> petList;
+    public Petlist petList;
     public GameObject waypoint;
     GameObject petChosen;
     Route chosenRoute;
-    public bool petSelected = false;
-    public bool routeSelected = false;
+    public bool petSelected;
+    public bool routeSelected;
     public bool isActive;
     int currentRouteIndex;
     float speed;
@@ -20,23 +21,43 @@ public class WayPointController : MonoBehaviour
     Vector3 currentPoint;
     Vector3 nextPoint;
     ARPlane arplane;
+    private ARRaycastManager arRaycastManager;
+    private ARPlaneManager arPlaneManager;
+    static List<ARRaycastHit> hits = new List<ARRaycastHit>();
+    private GameObject anchor;
+
     private void Awake()
     {
-        arplane = GameObject.Find("AR Session Origin").GetComponent<ARPlane>();   
+        arplane = GameObject.Find("AR Session Origin").GetComponent<ARPlane>();
+        arPlaneManager = GetComponent<ARPlaneManager>();
+        arRaycastManager = GetComponentInChildren<ARRaycastManager>();
+        anchor = GameObject.Find("Anchor");
+    }
+    
+    bool TryGetTouchPosition(out Vector2 touchPosition)
+    {
+        if((Input.touchCount > 0))
+        {
+            touchPosition = Input.GetTouch(0).position;
+            return true;
+        }
+        touchPosition = default;
+        return false;
     }
     void Start()
     {
         speed = 2;
         currentRouteIndex = 0;
-        petSelected = false;
-        routeSelected = false;
+ 
         ChoosePet(0);
         ChooseRoute(0);
+        //spawnNew = Instantiate(petChosen);
     }
 
     // Update is called once per frame
     void Update()
     {
+        GetTouchPosition();
         if (isActive && routeSelected && petSelected)
         {
             if (currentRouteIndex == chosenRoute.routePoints.Count - 1) return;
@@ -44,14 +65,14 @@ public class WayPointController : MonoBehaviour
             currentPoint = chosenRoute.routePoints[currentRouteIndex];
             nextPoint = chosenRoute.routePoints[currentRouteIndex + 1];
             MovePet();
-            CheckRange();
+           
         }
         else isActive = false;
     }
 
     public void ChoosePet(int petIndex)
     {
-        petChosen = petList[petIndex];
+        petChosen = petList.pets[petIndex];
         petSelected = true;
             
     }
@@ -67,7 +88,9 @@ public class WayPointController : MonoBehaviour
     {
         for(int i=1;i< chosenRoute.routePoints.Count; i++)
         {
-            Instantiate(waypoint, chosenRoute.routePoints[i], new Quaternion(0, 0, 0, 0));
+            GameObject newWaypoint =  Instantiate(waypoint, chosenRoute.routePoints[i], new Quaternion(0, 0, 0, 0));
+            newWaypoint.transform.parent = anchor.transform;
+
         }
        
         isRouteDone = true;
@@ -75,7 +98,8 @@ public class WayPointController : MonoBehaviour
 
     public void MovePet()
     {
-        Rigidbody petRb = petChosen.GetComponent<Rigidbody>();
+        Rigidbody petRb = spawnNew.GetComponent<Rigidbody>();
+        //Rigidbody petRb = petChosen.GetComponent<Rigidbody>();
         petRb.transform.LookAt(nextPoint);
         petRb.transform.Translate(Vector3.forward * speed * Time.deltaTime);
             
@@ -84,9 +108,9 @@ public class WayPointController : MonoBehaviour
     public void SetNextWaypoint()
     {
         
-        /*Debug.Log(currentRouteIndex);
+        Debug.Log(currentRouteIndex);
         Debug.Log(nextPoint);
-        Debug.Log(chosenRoute.routePoints.Count);*/
+        Debug.Log(chosenRoute.routePoints.Count);
         currentRouteIndex++;
         if(currentRouteIndex == chosenRoute.routePoints.Count - 1)
         {
@@ -112,25 +136,23 @@ public class WayPointController : MonoBehaviour
         routeSelected = !routeSelected;
     }
 
-    void CheckRange()
+    void GetTouchPosition()
     {
-        
-            RaycastHit checkForPlayer;
-            // create the ray to use
-            Ray ray = new Ray(transform.position, GameObject.FindGameObjectWithTag("playerCharacter").transform.position - transform.position);
-            //casting a ray against the player
-            if (Physics.Raycast(ray, out checkForPlayer))
+        if (!TryGetTouchPosition(out Vector2 touchPosition)) return;
+
+        if(Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+        {
+            if(arRaycastManager.Raycast(touchPosition,hits, UnityEngine.XR.ARSubsystems.TrackableType.Planes))
             {
-                //we are here if the ray hit a collider
-                //now to check if that collider is the player
-                if (checkForPlayer.collider.gameObject.GetComponent<ARSessionOrigin>())
+                var hitPose = hits[0].pose;
+                foreach(var plane in arPlaneManager.trackables)
                 {
-                Debug.Log(checkForPlayer.distance);
-                Debug.DrawLine(this.transform.position,checkForPlayer.transform.position,Color.red);
-                
+                    plane.gameObject.SetActive(false);
                 }
+                arPlaneManager.enabled = false;
+                spawnNew = Instantiate(petChosen,hitPose.position, hitPose.rotation);
+                spawnNew.transform.parent = anchor.transform;
             }
-            
-        
+        }
     }
 }

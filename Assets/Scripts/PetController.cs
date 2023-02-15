@@ -7,14 +7,12 @@ using UnityEngine.XR.ARSubsystems;
 public class PetController : MonoBehaviour
 {
     WayPointController wayPointController;
-    ARPlane arplane;
-    
 
-    private void Start()
+    private void Awake()
     {
-        wayPointController = GameObject.Find("WayPointController").GetComponent<WayPointController>();
-        
+        wayPointController = GameObject.Find("AR Session Origin").GetComponent<WayPointController>();
     }
+    
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Found waypoint");

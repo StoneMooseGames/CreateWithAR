@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c5ae672c8ecb6247b414c01754861d0, type: 3}
-  m_Name: Route1
+  m_Script: {fileID: 11500000, guid: 7bb729a8ee62d8e489951ca84df9e565, type: 3}
+  m_Name: Pets1
   m_EditorClassIdentifier: 
-  routePoints:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 15}
-  - {x: 0, y: 0, z: 25}
-  - {x: 10, y: 0, z: 35}
+  pets:
+  - {fileID: 3499162609340460420, guid: f540ba1be4bd7f64da3f79cf4bcb49e5, type: 3}
