@@ -15,3 +15,4 @@ MonoBehaviour:
   pets:
   - {fileID: 1478779186340453070, guid: 46e87959778492b4684bae29f4f6158c, type: 3}
   - {fileID: 2497402034226071535, guid: 249df1d5e6194ae46a32a4a67fb84be1, type: 3}
+  - {fileID: 8778760260070598023, guid: 4fa79d5da39b4ac479805aa37349cafc, type: 3}

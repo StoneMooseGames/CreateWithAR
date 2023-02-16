@@ -57,7 +57,7 @@ public class WayPointController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetTouchPosition();
+
         if (isActive && routeSelected && petSelected)
         {
             if (currentRouteIndex == chosenRoute.routePoints.Count - 1) return;
@@ -65,9 +65,14 @@ public class WayPointController : MonoBehaviour
             currentPoint = chosenRoute.routePoints[currentRouteIndex];
             nextPoint = chosenRoute.routePoints[currentRouteIndex + 1];
             MovePet();
-           
+
         }
-        else isActive = false;
+        else
+        {
+            GetTouchPosition();
+            isActive = false;
+        }
+
     }
 
     public void ChoosePet(int petIndex)
@@ -108,9 +113,7 @@ public class WayPointController : MonoBehaviour
     public void SetNextWaypoint()
     {
         
-        Debug.Log(currentRouteIndex);
-        Debug.Log(nextPoint);
-        Debug.Log(chosenRoute.routePoints.Count);
+       
         currentRouteIndex++;
         if(currentRouteIndex == chosenRoute.routePoints.Count - 1)
         {
@@ -123,6 +126,7 @@ public class WayPointController : MonoBehaviour
         if(petSelected && routeSelected)
         {
             isActive = true;
+            GameObject.Find("StartButton").SetActive(false);
         }
        
     }
@@ -151,7 +155,7 @@ public class WayPointController : MonoBehaviour
                 }
                 arPlaneManager.enabled = false;
                 spawnNew = Instantiate(petChosen,anchor.transform.position, hitPose.rotation);
-                spawnNew.transform.parent = anchor.transform;
+                //spawnNew.transform.parent = anchor.transform;
                 this.GetComponent<ARPlaneManager>().enabled = false;
                 this.GetComponent<ARRaycastManager>().enabled = false;
             }
