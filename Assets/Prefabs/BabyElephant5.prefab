@@ -300,6 +300,7 @@ GameObject:
   - component: {fileID: 5261547668724406182}
   - component: {fileID: -7162798001944466584}
   - component: {fileID: -6235553980560065010}
+  - component: {fileID: -7805941113554132111}
   m_Layer: 0
   m_Name: BabyElephant5
   m_TagString: Untagged
@@ -372,6 +373,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &-7805941113554132111
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1478779186340453070}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1567786548115936052
 GameObject:
   m_ObjectHideFlags: 0
