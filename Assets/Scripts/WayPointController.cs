@@ -20,30 +20,18 @@ public class WayPointController : MonoBehaviour
     bool isRouteDone = false;
     Vector3 currentPoint;
     public Vector3 nextPoint;
-    ARPlane arplane;
-    private ARRaycastManager arRaycastManager;
-    private ARPlaneManager arPlaneManager;
+    ARTrackedImageManager arImageManager;
+    
     static List<ARRaycastHit> hits = new List<ARRaycastHit>();
     private GameObject anchor;
 
     private void Awake()
     {
-        arplane = GameObject.Find("AR Session Origin").GetComponent<ARPlane>();
-        arPlaneManager = GetComponent<ARPlaneManager>();
-        arRaycastManager = GetComponentInChildren<ARRaycastManager>();
-        anchor = GameObject.Find("Anchor");
+        arImageManager = GetComponent<ARTrackedImageManager>();
+                
     }
     
-    bool TryGetTouchPosition(out Vector2 touchPosition)
-    {
-        if((Input.touchCount > 0))
-        {
-            touchPosition = Input.GetTouch(0).position;
-            return true;
-        }
-        touchPosition = default;
-        return false;
-    }
+    
     void Start()
     {
         speed = 2;
@@ -58,7 +46,7 @@ public class WayPointController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
         if (isActive && routeSelected && petSelected)
         {
             if (currentRouteIndex == chosenRoute.routePoints.Count - 1) return;
@@ -70,7 +58,7 @@ public class WayPointController : MonoBehaviour
         }
         else
         {
-            //GetTouchPosition();
+           
             isActive = false;
         }
 
@@ -93,12 +81,19 @@ public class WayPointController : MonoBehaviour
 
     void CreateWayPoints()
     {
-        for(int i=1;i< chosenRoute.routePoints.Count; i++)
+        anchor = GameObject.FindGameObjectWithTag("Anchor");
+        if (anchor != null)
         {
-            GameObject newWaypoint =  Instantiate(waypoint, chosenRoute.routePoints[i], new Quaternion(0, 0, 0, 0));
-            newWaypoint.transform.parent = anchor.transform;
+            anchor.transform.rotation = new Quaternion(0, 0, 0, 0);
+            arImageManager.enabled = false;
+            for (int i = 1; i < chosenRoute.routePoints.Count; i++)
+            {
+                GameObject newWaypoint = Instantiate(waypoint, anchor.transform.position + chosenRoute.routePoints[i], new Quaternion(0, 0, 0, 0));
+                newWaypoint.transform.parent = anchor.transform;
 
+            }
         }
+        
        
         isRouteDone = true;
     }
@@ -128,7 +123,7 @@ public class WayPointController : MonoBehaviour
         if(petSelected && routeSelected)
         {
             isActive = true;
-            //GameObject.Find("StartButton").SetActive(false);
+            
         }
        
     }
@@ -143,25 +138,5 @@ public class WayPointController : MonoBehaviour
         routeSelected = true;
     }
 
-    void GetTouchPosition()
-    {
-        if (!TryGetTouchPosition(out Vector2 touchPosition)) return;
-
-        if(Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
-        {
-            if(arRaycastManager.Raycast(touchPosition,hits, UnityEngine.XR.ARSubsystems.TrackableType.Planes))
-            {
-                var hitPose = hits[0].pose;
-                foreach(var plane in arPlaneManager.trackables)
-                {
-                    plane.gameObject.SetActive(false);
-                }
-                arPlaneManager.enabled = false;
-                spawnNew = Instantiate(petChosen,anchor.transform.position, hitPose.rotation);
-                //spawnNew.transform.parent = anchor.transform;
-                this.GetComponent<ARRaycastManager>().enabled = false;
-                
-            }
-        }
-    }
+    
 }

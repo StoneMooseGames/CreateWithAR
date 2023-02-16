@@ -53,7 +53,7 @@ Camera:
   m_FOVAxisMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 23.038952
+  m_FocalLength: 55.51058
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -61,7 +61,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 20
+  far clip plane: 200
   field of view: 59.939297
   orthographic: 0
   orthographic size: 5
@@ -175,9 +175,13 @@ GameObject:
   - component: {fileID: 1200280968299279584}
   - component: {fileID: 1200280968299279591}
   - component: {fileID: 1200280968299279585}
+  - component: {fileID: 1007859356}
+  - component: {fileID: 1007859364}
+  - component: {fileID: 1007859368}
+  - component: {fileID: 1007859372}
   m_Layer: 0
   m_Name: AR Session Origin
-  m_TagString: Untagged
+  m_TagString: playerCharacter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -226,5 +230,66 @@ MonoBehaviour:
   m_SerializedLibrary: {fileID: 11400000, guid: 1b91f4a8f6323de418e704442dae7eaf,
     type: 2}
   m_MaxNumberOfMovingImages: 0
-  m_TrackedImagePrefab: {fileID: 366428452883267241, guid: 1a07e1c59d1ee714a96f2b1c8f3e17a2,
+  m_TrackedImagePrefab: {fileID: 0}
+--- !u!114 &1007859356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200280968299279590}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 728ad7fae8e460a4ba41265c7308d757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AnchorPrefab: {fileID: 0}
+--- !u!114 &1007859364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200280968299279590}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PlanePrefab: {fileID: 1792238835872970682, guid: 52177e56ea5066e47b46658e908f9d81,
     type: 3}
+  m_DetectionMode: 1
+--- !u!114 &1007859368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200280968299279590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa17d122634046b4a8e23048891fafc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RaycastPrefab: {fileID: 0}
+--- !u!114 &1007859372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200280968299279590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21a1d76ae6739394e803bbc6ea45847b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  routeList:
+  - {fileID: 11400000, guid: 7b1d6f3f3f149484eb3fc4919b76aa66, type: 2}
+  petList: {fileID: 11400000, guid: ebcc41a9a0a8afb4aad82d6a44675b8b, type: 2}
+  waypoint: {fileID: 8139527887550771380, guid: 6d78913f320593947ae103fc486639c7,
+    type: 3}
+  petSelected: 0
+  routeSelected: 0
+  isActive: 0
+  nextPoint: {x: 0, y: 0, z: 0}
