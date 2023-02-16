@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Pets1
   m_EditorClassIdentifier: 
   pets:
-  - {fileID: 3499162609340460420, guid: f540ba1be4bd7f64da3f79cf4bcb49e5, type: 3}
+  - {fileID: 1478779186340453070, guid: 46e87959778492b4684bae29f4f6158c, type: 3}
+  - {fileID: 2497402034226071535, guid: 249df1d5e6194ae46a32a4a67fb84be1, type: 3}

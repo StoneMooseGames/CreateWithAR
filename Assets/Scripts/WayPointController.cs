@@ -150,8 +150,10 @@ public class WayPointController : MonoBehaviour
                     plane.gameObject.SetActive(false);
                 }
                 arPlaneManager.enabled = false;
-                spawnNew = Instantiate(petChosen,hitPose.position, hitPose.rotation);
+                spawnNew = Instantiate(petChosen,anchor.transform.position, hitPose.rotation);
                 spawnNew.transform.parent = anchor.transform;
+                this.GetComponent<ARPlaneManager>().enabled = false;
+                this.GetComponent<ARRaycastManager>().enabled = false;
             }
         }
     }
