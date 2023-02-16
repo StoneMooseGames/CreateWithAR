@@ -19,7 +19,7 @@ public class WayPointController : MonoBehaviour
     float speed;
     bool isRouteDone = false;
     Vector3 currentPoint;
-    Vector3 nextPoint;
+    public Vector3 nextPoint;
     ARPlane arplane;
     private ARRaycastManager arRaycastManager;
     private ARPlaneManager arPlaneManager;
@@ -48,9 +48,10 @@ public class WayPointController : MonoBehaviour
     {
         speed = 2;
         currentRouteIndex = 0;
- 
-        ChoosePet(0);
-        ChooseRoute(0);
+         
+        //Debugging
+        //ChoosePet(3);
+        //ChooseRoute(0);
         //spawnNew = Instantiate(petChosen);
     }
 
@@ -69,7 +70,7 @@ public class WayPointController : MonoBehaviour
         }
         else
         {
-            GetTouchPosition();
+            //GetTouchPosition();
             isActive = false;
         }
 
@@ -78,6 +79,7 @@ public class WayPointController : MonoBehaviour
     public void ChoosePet(int petIndex)
     {
         petChosen = petList.pets[petIndex];
+        spawnNew = Instantiate(petChosen, anchor.transform.position, anchor.transform.rotation);
         petSelected = true;
             
     }
@@ -126,18 +128,19 @@ public class WayPointController : MonoBehaviour
         if(petSelected && routeSelected)
         {
             isActive = true;
-            GameObject.Find("StartButton").SetActive(false);
+            //GameObject.Find("StartButton").SetActive(false);
         }
        
     }
     public void TogglePetSelected()
     {
-        petSelected = !petSelected;
+        petSelected = true;
+        
     }
 
     public void ToggleRouteSelected()
     {
-        routeSelected = !routeSelected;
+        routeSelected = true;
     }
 
     void GetTouchPosition()
@@ -156,8 +159,8 @@ public class WayPointController : MonoBehaviour
                 arPlaneManager.enabled = false;
                 spawnNew = Instantiate(petChosen,anchor.transform.position, hitPose.rotation);
                 //spawnNew.transform.parent = anchor.transform;
-                this.GetComponent<ARPlaneManager>().enabled = false;
                 this.GetComponent<ARRaycastManager>().enabled = false;
+                
             }
         }
     }
