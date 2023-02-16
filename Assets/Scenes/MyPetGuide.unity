@@ -783,6 +783,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3891706641762543168, guid: ac4365706760a3549bd00f9d4a825268,
+        type: 3}
+      propertyPath: m_text
+      value: Welcome to "My Pet Guide"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758598514573293699, guid: ac4365706760a3549bd00f9d4a825268,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac4365706760a3549bd00f9d4a825268, type: 3}
 --- !u!1 &2127680116
